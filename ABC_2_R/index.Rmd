@@ -1,0 +1,348 @@
+---
+title       : The ABC to R
+subtitle    : A brief, brief introduction to R
+author      : Raquel Ubach
+job         : Autonomous University of Barcelona (UAB)
+logo        : logo_uab.jpg
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [quiz, bootstrap]  # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+
+---
+## A - What is R?
+R is a **programming language** and a free **software environment** for statistical computing
+
+R is an implementation of the S programming language -> a 'dialect' of S
+
+R was created by **R**oss Ihaka and **R**obert Gentleman (University of Auckland, New Zealand) 
+
+It is currently developed by the **R Development Core Team**.
+
+The R language is widely used among **statisticians** and **data analysts** for developing statistical software and data analysis.
+
+
+---
+## B - Why R?
+R is freely available under the GNU General Public License.
+
+R provides a wide variety of statistical and graphical techniques, 
+including:
+* linear and nonlinear modeling, 
+* classical statistical tests, 
+* time-series analysis, 
+* classification, 
+* clustering, 
+* and much more!!
+
+---
+## B - Why R?
+When you download R, you are installing the 'base' R system
+composed by:
+* the base package, which contains most of fundamental functions. 
+* other packages like utils, stats, datasets, graphics, grDevices, grid, methods, tools, parallel, compiler, splines, tcltk, stats4
+
+But R is **easily extensible** through user-submitted packages for specific functions or specific areas of study.
+
+Remember R is a collaborative project with a very **active** community of contributors. 
+
+Most of these packages are stored in CRAN (Comprehensive R Archive Network) http://cran.r-project.org/mirrors.html
+
+There are approximately 5600 packages on CRAN covering a wide range of topics.
+
+Similarly, many biological libraries are compiled by the Bioconductor project 
+http://www.bioconductor.org/
+
+
+---
+## B - Why R?
+R runs on different platforms (windows, mac, linux, unix).
+
+Another strength of R is static graphics, which can produce **publication-quality graphs**, including mathematical symbols.
+
+Moreover, R facilitates **reproducible research** and automated **report generation.**
+
+--- &radio
+## Quizz 1
+Select the right statement:
+
+1. 1. R is a windows environment within which statistical techniques are implemented.
+2. 2. R is a free statistical environment when user is commited to contribute at least one year with the project.
+3. 3. R does not allow reproducible research.
+4. _4. R provides a wide variety of statistical and graphical techniques, and is highly extensible._
+
+***.hint 
+R runs on different operating systems.
+It is provided  as Free Software under the terms of the Free Software Foundation's GNU General Public License
+
+---
+## C - How?
+R is presented in a command-line interface, but for a more user-friendly interface we are going to use RStudio Desktop.
+
+The RStudio layout is divided in 4 panels:
+* in the upper left corner: a source code editor 
+* in the lower left corner: the R console
+* in the upper right corner: the history and workspace tabs  
+* in the lower right corner: Files, Plots, Packages and Help browser organised by different tabs
+
+
+---
+## C - How?
+We are going to generate a new script where we will record every step of our analysis.
+
+1. On the secondary menu, click on the green plus and select 'R script' (alternatively: Ctrl + Shift + N)
+2. And now save it, we will give it the name 'ABC_to_R.r' and store it in the ABC_to_R folder
+3. On the first lines, we will type:
+
+````{r}
+### ABC_to_R script to record the analysis performed in this seminar
+### Author: Write here your name
+### Date: XX-XX-XX
+```
+
+---
+## C - How?
+The most basic object is a **vector**.
+A vector can only contain objects of the same class.
+
+R has five **classes** of objects:
+* character 
+* numeric - double precision real numbers
+* integer 
+* complex
+* logical - True / False
+
+---
+## C - How?
+
+The c() combine function can be used to create vectors of objects, like:
+
+```{r}
+x1 <- c("a", "f", "z") ## character
+x2 <- c(0.2,1.3, 0.9) ## numeric
+x3 <- 1.25:3.25 ## numeric
+x4 <- 3:5 ## integer
+x5 <- c(3, 4, 5) ## integer
+x6 <- c(TRUE, FALSE, FALSE) ## logical
+x7 <- c(T, F, F) ## logical
+x8 <- c(1+0i,3+4i) ## complex
+```
+
+```{r, results='hide'}
+## Your turn to check it
+class (x1)
+class (x3)
+class (x4)
+class (x7)
+class (x8)
+```
+
+---
+## C - How?
+Other useful functions are:
+```{r}
+length(x1) # number of elements or components
+str(x1)    # structure of an object
+names(x1)  # names
+```
+---
+## C - How?
+Another way to generate vectors is using the vector () function
+
+```{r}
+x <- vector ("numeric", length = 3)
+x
+y <- 0:2 ## see the difference
+y
+```
+
+---
+## C - How?
+**Matrices** are vectors with a *dimension* attribute (nrow, ncol). 
+All columns in a matrix must be of the same class (numeric, character, etc.) and the same length.
+```{r}
+m <- matrix (1:12, nrow=2, ncol=6)
+m
+dim (m)
+attributes(m)
+```
+
+---
+## C - How?
+Selecting columns, rows, or different elements by the use of subscripts
+```{r}
+m[,4] # 4th column of matrix
+m[2,] # 2nd row of matrix
+m[1:2,4:5] # rows 1,2 of columns 4,5
+m[1:2,c(4,6)] # rows 1,2 of columns 4,6
+```
+
+---
+## C - How?
+Matrices can also be created by column-binding **cbind()** and row-binding **rbind()**
+```{r}
+m1 <- cbind (x,y)
+m1
+m2 <- rbind (x,y)
+m2
+```
+
+---
+## C - How?
+**Factors** are used to represent categorical data (like land use classes, biogeographic regions, size, etc.).
+Factors are treated as integer vectors where each element has a label.
+```{r}
+sex <- factor(c('female', 'male', 'female', 'female', 'male'))
+sex
+```
+Levels are the different categories present in the selected variable
+```{r}
+table(sex)
+```
+
+---
+## C - How?
+**Data frames** are used to store tabular data. 
+* Data frames can store variables of different classes (each column can store different types of objects)
+* Each variable must have the same number of elements (same number of rows)
+
+```{r}
+a <- 1:4
+b <- c("apples", "lemons", "oranges", NA)
+c <- c(T,F,F,T)
+mydata <- data.frame(a,b,c)
+mydata
+names(mydata) <- c("ID","Fruits","Available") 
+```
+
+---
+## C - How?
+Identifying elements in data frames:
+```{r}
+mydata[2:3] # columns 2,3 of data frame
+mydata[c("ID","Available")] # columns ID and Available from data frame
+mydata$Fruits # variable x1 in the data frame
+```
+
+---
+## C - How?
+Data frames can be created by data.frame() function. 
+But are usually built by importing the data. This can be done by calling read.table() or read.csv() functions.
+
+At this point, let's go back to our first script.
+
+---
+## C - How? 
+We already have the header information. Now, it's time to start coding:
+```{r}
+# Check your working directory
+getwd()
+# If necessary, set your working directory
+setwd("~/ABC_2_R")
+```
+```{r, results='hide'}
+## Installing required packages
+#install.packages('psych')
+
+## http://cran.r-project.org/web/packages/psych/index.html
+## A number of routines for personality, psychometrics and 
+## experimental psychology. Functions are primarily for 
+## scale construction using factor analysis, cluster 
+## analysis and reliability analysis, although others 
+## provide basic descriptive statistics.
+```
+
+---
+## C - How? 
+```{r, results='hide'}
+## http://cran.r-project.org/web/packages/psych/index.html
+## A number of routines for personality, psychometrics and 
+## experimental psychology. Functions are primarily for 
+## scale construction using factor analysis, cluster 
+## analysis and reliability analysis, although others 
+## provide basic descriptive statistics.
+```
+```{r, results='hide'}
+## Loading required packages
+library(psych)
+```
+
+---
+## C - How? 
+```{r}
+# Read data
+setwd('C:/Users/Raquel/Documents/ABC_2_R')
+GIdata <- read.csv ("./rawdata/FactSheet.csv", header = TRUE, sep = ";", dec =",")
+
+# Describe and summary
+describe (GIdata)
+```
+
+---
+## C - How? 
+```{r}
+# Describe and summary
+summary(GIdata)
+```
+
+---
+## C - How? 
+```{r}
+# Histograms
+par(mfrow=c(1,2))
+hist(GIdata$EGI_buffer, xlab ="Effective GI", main="")
+hist(GIdata$hotspot_1_buffer, xlab ="Hotspot percentage", main="")
+```
+
+---
+## C - How? 
+```{r}
+# Correlation matrix for GI values
+sel_var <- GIdata[, c(5:9,14:15)]
+round (cor(sel_var[5:7]),2)
+```
+
+---
+## C - How? 
+```{r}
+# Scatterplots and regression lines
+# For Mean Effective GI
+plot (GIdata$EGI_buffer~GIdata$hotspot_1_buffer)
+abline (lm(GIdata$EGI_buffer~GIdata$hotspot_1_buffer), col="red")
+```
+
+---
+## C - How? 
+```{r}
+# Boxplots
+plot (GIdata$EGI_buffer~as.factor(GIdata$Biogeo_region), col="darkgreen", main ="mean Effective GI")
+unique(GIdata$Biogeo_region)
+```
+
+---
+## C - How? 
+```{r}
+# linear models
+lmEGI <- lm (GIdata$EGI_buffer ~ GIdata$Pop_density + GIdata$area_km2 + GIdata$hotspot_1_buffer)
+```
+
+---
+## C - How? 
+```{r}
+# linear models
+summary (lmEGI)
+```
+
+---
+## C - How? 
+```{r}
+lmHS <- lm (GIdata$hotspot_1_buffer ~ GIdata$Mean_altitude + GIdata$Pop_density + GIdata$area_km2)
+```
+
+---
+## C - How? 
+```{r}
+summary (lmHS)
+```
